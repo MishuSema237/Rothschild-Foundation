@@ -2,30 +2,47 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Registration from '@/models/Registration';
 import { sendEmail } from '@/lib/email';
-import cloudinary from '@/lib/cloudinary';
+import { supabase } from '@/lib/supabase';
+import { registrationSchema } from '@/lib/validations';
 
 export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
     const body = await req.json();
 
-    // Upload images to Cloudinary
-    let personalPhotoUrl = '';
-    let idCardPhotoUrl = '';
-
-    if (body.personalPhoto) {
-      const uploadRes = await cloudinary.uploader.upload(body.personalPhoto, {
-        folder: 'rothschild/members',
-      });
-      personalPhotoUrl = uploadRes.secure_url;
+    // Validate request body
+    const validation = registrationSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json({ success: false, errors: validation.error.format() }, { status: 400 });
     }
 
-    if (body.idCardPhoto) {
-      const uploadRes = await cloudinary.uploader.upload(body.idCardPhoto, {
-        folder: 'rothschild/ids',
-      });
-      idCardPhotoUrl = uploadRes.secure_url;
-    }
+    // Helper to upload base64 to Supabase
+    const uploadToSupabase = async (base64Data: string, fileName: string, bucket: string) => {
+      if (!base64Data) return '';
+
+      const base64Content = base64Data.split(';base64,').pop()!;
+      const buffer = Buffer.from(base64Content, 'base64');
+      const filePath = `${Date.now()}_${fileName}`;
+
+      const { data, error } = await supabase.storage
+        .from(bucket)
+        .upload(filePath, buffer, {
+          contentType: 'image/jpeg', // Assuming jpeg, could be more dynamic
+          upsert: false
+        });
+
+      if (error) throw error;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from(bucket)
+        .getPublicUrl(filePath);
+
+      return publicUrl;
+    };
+
+    // Upload images to Supabase (Ensure buckets 'members' and 'ids' exist in Supabase)
+    const personalPhotoUrl = await uploadToSupabase(body.personalPhoto, 'personal.jpg', 'members');
+    const idCardPhotoUrl = await uploadToSupabase(body.idCardPhoto, 'idcard.jpg', 'ids');
 
     // Create record in DB with URLs instead of base64
     const registration = await Registration.create({

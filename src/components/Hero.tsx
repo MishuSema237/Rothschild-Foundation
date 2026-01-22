@@ -9,7 +9,7 @@ export default function Hero() {
             {/* Background with Hero Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/hero-bg.png"
+                    src="/chosen_initiation_placeholder.png"
                     alt="Sacred Background"
                     fill
                     className="object-cover opacity-60 scale-105"
@@ -27,7 +27,7 @@ export default function Hero() {
                 >
                     <div className="relative w-40 h-40 sacred-glow rounded-full overflow-hidden border border-gold/20">
                         <Image
-                            src="/logo.png"
+                            src="/illuminati_eyes_emblem.png"
                             alt="Rothschild & Co Logo"
                             fill
                             className="object-cover"

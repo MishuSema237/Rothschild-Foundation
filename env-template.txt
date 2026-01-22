@@ -1,0 +1,27 @@
+# ENV TEMPLATE - RENAME THIS TO .env.local
+
+# MongoDB (Get your URI from MongoDB Atlas)
+MONGODB_URI=
+
+# Cloudinary (Get these from your Cloudinary Dashboard)
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# Nodemailer (SMTP credentials)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=
+SMTP_PASS=
+ADMIN_EMAIL=
+
+# NextAuth (Generate a secret with: openssl rand -base64 32)
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=http://localhost:3000
+
+# NextAuth Admin Credentials
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=
+
+# WhatsApp Redirection
+NEXT_PUBLIC_WHATSAPP_NUMBER=+447402829950

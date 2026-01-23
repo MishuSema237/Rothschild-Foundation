@@ -9,29 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "mongoose": "^8.0.0",
-    "nodemailer": "^6.9.0",
-    "next-auth": "4.24.5",
+    "@hookform/resolvers": "^3.3.4",
+    "@supabase/supabase-js": "^2.39.7",
+    "clsx": "^2.1.0",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.473.0",
-    "clsx": "^2.1.0",
-    "tailwind-merge": "^2.2.0",
-    "zod": "^3.22.4",
+    "mongoose": "^8.0.0",
+    "next": "^15.1.6",
+    "next-auth": "4.24.5",
+    "nodemailer": "^6.9.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-hook-form": "^7.50.1",
-    "@hookform/resolvers": "^3.3.4",
-    "@supabase/supabase-js": "^2.39.7"
+    "tailwind-merge": "^2.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.14",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/nodemailer": "^6.4.14",
     "eslint": "^9",
-    "eslint-config-next": "15.1.6",
+    "eslint-config-next": "^15.1.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

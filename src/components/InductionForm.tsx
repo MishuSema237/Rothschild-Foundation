@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, ArrowRight, ArrowLeft, Loader2, Sparkles, AlertCircle, ShieldCheck, MessageSquare, ExternalLink } from "lucide-react";
+import { Upload, ArrowRight, ArrowLeft, Loader2, Sparkles, AlertCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema, RegistrationInput } from "@/lib/validations";
@@ -13,14 +13,13 @@ export default function InductionForm() {
     const [currentStep, setCurrentStep] = useState(0);
     const [loading, setLoading] = useState(false);
     const [complete, setComplete] = useState(false);
-    const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
+    const [paymentMethods, setPaymentMethods] = useState<{ _id: string, name: string }[]>([]);
     const [previews, setPreviews] = useState({ personal: "", idCardFront: "", idCardBack: "" });
 
     const {
         register,
         handleSubmit,
         setValue,
-        watch,
         trigger,
         formState: { errors },
     } = useForm<RegistrationInput>({
@@ -62,8 +61,10 @@ export default function InductionForm() {
         reader.onerror = error => reject(error);
     });
 
+    type StepField = keyof RegistrationInput;
+
     const nextStep = async () => {
-        const fields: any = {
+        const fields: Record<number, StepField[]> = {
             0: ["name", "dateOfBirth", "email", "phone", "maritalStatus"],
             1: ["country", "city", "occupation", "salary"],
             2: ["personalPhoto", "idCardFront", "idCardBack"],
@@ -98,9 +99,9 @@ export default function InductionForm() {
                     window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
                 }, 3000);
             } else {
-                setError(result.error || "A sacred connection error occurred. Please verify your details.");
+                setError((result as { error?: string }).error || "A sacred connection error occurred. Please verify your details.");
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error(err);
             setError("The communication path is blocked. Check your network connection.");
         } finally {
@@ -188,7 +189,7 @@ export default function InductionForm() {
                                     <label className="text-gold/60 text-xs uppercase tracking-widest block">Personal Picture</label>
                                     <div className={`relative h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.personalPhoto ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                         {previews.personal ? (
-                                            <img src={previews.personal} className="w-full h-full object-cover" />
+                                            <img src={previews.personal} alt="Personal Preview" className="w-full h-full object-cover" />
                                         ) : (
                                             <div className="absolute inset-0 flex flex-col items-center justify-center text-gold/40">
                                                 <Upload className="w-8 h-8 mb-2" />
@@ -205,7 +206,7 @@ export default function InductionForm() {
                                         <label className="text-gold/60 text-xs uppercase tracking-widest block">National ID (FRONT)</label>
                                         <div className={`relative h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.idCardFront ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                             {previews.idCardFront ? (
-                                                <img src={previews.idCardFront} className="w-full h-full object-cover" />
+                                                <img src={previews.idCardFront} alt="ID Front Preview" className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gold/40">
                                                     <Upload className="w-8 h-8 mb-2" />
@@ -220,7 +221,7 @@ export default function InductionForm() {
                                         <label className="text-gold/60 text-xs uppercase tracking-widest block">National ID (BACK)</label>
                                         <div className={`relative h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.idCardBack ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                             {previews.idCardBack ? (
-                                                <img src={previews.idCardBack} className="w-full h-full object-cover" />
+                                                <img src={previews.idCardBack} alt="ID Back Preview" className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gold/40">
                                                     <Upload className="w-8 h-8 mb-2" />
@@ -301,7 +302,7 @@ export default function InductionForm() {
     );
 }
 
-function FormInput({ label, error, type = "text", ...rest }: any) {
+function FormInput({ label, error, type = "text", ...rest }: { label: string, error?: string, type?: string, [key: string]: unknown }) {
     return (
         <div className="space-y-2">
             <label className="text-gold/60 text-xs uppercase tracking-widest">{label}</label>

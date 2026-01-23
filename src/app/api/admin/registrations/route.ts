@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
 import Registration from "@/models/Registration";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     const session = await getServerSession(authOptions);
 
     if (!session) {
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
         await connectToDatabase();
         const registrations = await Registration.find().sort({ createdAt: -1 });
         return NextResponse.json(registrations);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch {
+        return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 }

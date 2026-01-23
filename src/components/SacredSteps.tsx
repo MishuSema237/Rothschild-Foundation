@@ -59,7 +59,7 @@ export default function SacredSteps() {
                     className="mt-24 text-center glass p-12 max-w-4xl mx-auto rounded-xl border- gold/30"
                 >
                     <p className="text-xl md:text-2xl font-serif italic text-gold/90 leading-relaxed">
-                        "Each of these steps is essential and must be completed in proper sequence for one to fully partake in the privileges and honors reserved for members."
+                        &quot;Each of these steps is essential and must be completed in proper sequence for one to fully partake in the privileges and honors reserved for members.&quot;
                     </p>
                     <p className="mt-8 text-gold font-bold tracking-[0.3em] uppercase">Follow the light!!!</p>
                 </motion.div>

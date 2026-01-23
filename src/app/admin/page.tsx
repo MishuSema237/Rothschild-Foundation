@@ -6,24 +6,50 @@ import { useEffect, useState } from "react";
 import {
     Loader2, User, MapPin, DollarSign, Calendar, Mail,
     Phone, ExternalLink, ShieldCheck, Send, Plus, Trash2,
-    CreditCard, ChevronRight, MessageSquare
+    CreditCard, MessageSquare
 } from "lucide-react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+interface RegistrationRecord {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    country: string;
+    city: string;
+    dateOfBirth: string;
+    salary: string;
+    maritalStatus: string;
+    occupation: string;
+    paymentMethod: string;
+    personalPhoto: string;
+    idCardFront: string;
+    idCardBack: string;
+    status?: string;
+    createdAt: string;
+}
+
+interface PaymentMethodRecord {
+    _id: string;
+    name: string;
+    details: string;
+    description: string;
+}
 
 export default function AdminDashboard() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<"registrations" | "payments">("registrations");
 
     // Data states
-    const [registrations, setRegistrations] = useState<any[]>([]);
-    const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
+    const [registrations, setRegistrations] = useState<RegistrationRecord[]>([]);
+    const [paymentMethods, setPaymentMethods] = useState<PaymentMethodRecord[]>([]);
     const [loading, setLoading] = useState(true);
 
     // Messaging state
     const [showMessageModal, setShowMessageModal] = useState(false);
-    const [selectedApplicant, setSelectedApplicant] = useState<any>(null);
+    const [selectedApplicant, setSelectedApplicant] = useState<RegistrationRecord | null>(null);
     const [messageData, setMessageData] = useState({ subject: "Update on your Induction", message: "" });
     const [sending, setSending] = useState(false);
 
@@ -37,7 +63,7 @@ export default function AdminDashboard() {
         } else if (status === "authenticated") {
             fetchData();
         }
-    }, [status]);
+    }, [status, router]);
 
     const fetchData = async () => {
         setLoading(true);
@@ -48,7 +74,7 @@ export default function AdminDashboard() {
             ]);
             setRegistrations(await regRes.json());
             setPaymentMethods(await payRes.json());
-        } catch (err) {
+        } catch (err: unknown) {
             console.error(err);
         } finally {
             setLoading(false);
@@ -63,8 +89,8 @@ export default function AdminDashboard() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    to: selectedApplicant.email,
-                    applicantName: selectedApplicant.name,
+                    to: selectedApplicant?.email,
+                    applicantName: selectedApplicant?.name,
                     ...messageData
                 })
             });
@@ -73,7 +99,7 @@ export default function AdminDashboard() {
                 setShowMessageModal(false);
                 setMessageData({ ...messageData, message: "" });
             }
-        } catch (err) {
+        } catch {
             alert("Failed to send message");
         } finally {
             setSending(false);
@@ -92,7 +118,7 @@ export default function AdminDashboard() {
                 setShowPaymentModal(false);
                 setNewPayment({ name: "", details: "", description: "" });
             }
-        } catch (err) {
+        } catch {
             alert("Failed to add payment method");
         }
     };
@@ -102,7 +128,7 @@ export default function AdminDashboard() {
         try {
             await fetch(`/api/admin/payment-methods?id=${id}`, { method: "DELETE" });
             fetchData();
-        } catch (err) {
+        } catch {
             alert("Failed to delete");
         }
     };

@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       const buffer = Buffer.from(base64Content, 'base64');
       const filePath = `${Date.now()}_${fileName}`;
 
-      const { data, error } = await supabase.storage
+      const { data: _data, error } = await supabase.storage
         .from(bucket)
         .upload(filePath, buffer, {
           contentType: 'image/jpeg', // Assuming jpeg, could be more dynamic
@@ -94,8 +94,9 @@ export async function POST(req: NextRequest) {
     ]);
 
     return NextResponse.json({ success: true, id: registration._id });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Registration API Error:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

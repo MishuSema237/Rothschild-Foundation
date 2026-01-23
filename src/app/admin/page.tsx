@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import {
     Loader2, User, MapPin, DollarSign, Calendar, Mail,
     Phone, ExternalLink, ShieldCheck, Send, Plus, Trash2,
-    CreditCard, ChevronRight, MessageSquare
+    CreditCard, MessageSquare
 } from "lucide-react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function AdminDashboard() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<"registrations" | "payments">("registrations");
 
@@ -37,7 +37,7 @@ export default function AdminDashboard() {
         } else if (status === "authenticated") {
             fetchData();
         }
-    }, [status]);
+    }, [status, router]);
 
     const fetchData = async () => {
         setLoading(true);
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
                 setShowMessageModal(false);
                 setMessageData({ ...messageData, message: "" });
             }
-        } catch (err) {
+        } catch (_err) {
             alert("Failed to send message");
         } finally {
             setSending(false);
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
                 setShowPaymentModal(false);
                 setNewPayment({ name: "", details: "", description: "" });
             }
-        } catch (err) {
+        } catch (_err) {
             alert("Failed to add payment method");
         }
     };
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
         try {
             await fetch(`/api/admin/payment-methods?id=${id}`, { method: "DELETE" });
             fetchData();
-        } catch (err) {
+        } catch (_err) {
             alert("Failed to delete");
         }
     };

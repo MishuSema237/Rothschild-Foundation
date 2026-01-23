@@ -61,8 +61,10 @@ export default function InductionForm() {
         reader.onerror = error => reject(error);
     });
 
+    type StepField = keyof RegistrationInput;
+
     const nextStep = async () => {
-        const fields: any = {
+        const fields: Record<number, StepField[]> = {
             0: ["name", "dateOfBirth", "email", "phone", "maritalStatus"],
             1: ["country", "city", "occupation", "salary"],
             2: ["personalPhoto", "idCardFront", "idCardBack"],
@@ -300,7 +302,7 @@ export default function InductionForm() {
     );
 }
 
-function FormInput({ label, error, type = "text", ...rest }: { label: string, error?: string, type?: string, [key: string]: any }) {
+function FormInput({ label, error, type = "text", ...rest }: { label: string, error?: string, type?: string, [key: string]: unknown }) {
     return (
         <div className="space-y-2">
             <label className="text-gold/60 text-xs uppercase tracking-widest">{label}</label>

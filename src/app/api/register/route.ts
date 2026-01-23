@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       const buffer = Buffer.from(base64Content, 'base64');
       const filePath = `${Date.now()}_${fileName}`;
 
-      const { data: _data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from(bucket)
         .upload(filePath, buffer, {
           contentType: 'image/jpeg', // Assuming jpeg, could be more dynamic

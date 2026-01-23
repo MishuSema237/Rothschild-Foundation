@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
@@ -15,7 +15,7 @@ export async function GET() {
         await connectToDatabase();
         const registrations = await Registration.find().sort({ createdAt: -1 });
         return NextResponse.json(registrations);
-    } catch (error: unknown) {
+    } catch {
         return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 }

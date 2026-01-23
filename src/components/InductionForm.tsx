@@ -76,14 +76,19 @@ export default function InductionForm() {
         }
     };
 
+    const [error, setError] = useState<string | null>(null);
+
     const onSubmit = async (data: RegistrationInput) => {
         setLoading(true);
+        setError(null);
         try {
             const res = await fetch("/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
+
+            const result = await res.json();
 
             if (res.ok) {
                 setComplete(true);
@@ -92,10 +97,12 @@ export default function InductionForm() {
                     const message = encodeURIComponent(`Hello Rothschild & Co, I have just completed my registration on the website. My name is ${data.name}. I am ready to proceed with the Initiation.`);
                     window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
                 }, 3000);
+            } else {
+                setError(result.error || "A sacred connection error occurred. Please verify your details.");
             }
-        } catch (error) {
-            console.error(error);
-            alert("An error occurred during registration. Please try again.");
+        } catch (err: any) {
+            console.error(err);
+            setError("The communication path is blocked. Check your network connection.");
         } finally {
             setLoading(false);
         }
@@ -241,6 +248,14 @@ export default function InductionForm() {
                                     </select>
                                     {errors.paymentMethod && <p className="text-red-500 text-[10px] mt-1 flex items-center justify-center gap-1"><AlertCircle size={10} /> {errors.paymentMethod.message}</p>}
                                 </div>
+
+                                {error && (
+                                    <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center gap-3 text-red-400 text-sm mb-6 max-w-md mx-auto">
+                                        <AlertCircle className="shrink-0" size={18} />
+                                        <p>{error}</p>
+                                    </div>
+                                )}
+
                                 <div className="p-6 glass border-red-500/20 rounded-xl">
                                     <p className="text-red-400 font-serif mb-2">Notice of Initiation Fee</p>
                                     <p className="text-xs text-foreground/50 tracking-wide uppercase italic">

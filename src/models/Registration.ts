@@ -8,8 +8,9 @@ const RegistrationSchema = new Schema({
     maritalStatus: { type: String, required: true },
     occupation: { type: String, required: true },
     salary: { type: String, required: true },
-    personalPhoto: { type: String, required: true }, // Cloudinary URL
-    idCardPhoto: { type: String, required: true },   // Cloudinary URL
+    personalPhoto: { type: String, required: true },
+    idCardFront: { type: String, required: true },
+    idCardBack: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
     paymentMethod: { type: String, required: true },

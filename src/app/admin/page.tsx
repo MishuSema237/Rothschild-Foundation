@@ -192,9 +192,12 @@ export default function AdminDashboard() {
                                                 <div className="flex items-center gap-2 text-foreground/60"><Phone size={12} className="text-gold/40" /> <span>{reg.phone}</span></div>
                                             </div>
 
-                                            <div className="grid grid-cols-3 gap-2 pt-4">
-                                                <a href={reg.idCardPhoto} target="_blank" className="flex items-center justify-center gap-1 py-1.5 bg-obsidian-light border border-gold/20 text-gold/60 text-[8px] uppercase tracking-tighter hover:border-gold hover:text-gold transition-all">
-                                                    <ShieldCheck size={12} /> ID Card
+                                            <div className="grid grid-cols-4 gap-2 pt-4">
+                                                <a href={reg.idCardFront} target="_blank" className="flex items-center justify-center gap-1 py-1.5 bg-obsidian-light border border-gold/20 text-gold/60 text-[8px] uppercase tracking-tighter hover:border-gold hover:text-gold transition-all">
+                                                    <ShieldCheck size={12} /> ID Front
+                                                </a>
+                                                <a href={reg.idCardBack} target="_blank" className="flex items-center justify-center gap-1 py-1.5 bg-obsidian-light border border-gold/20 text-gold/60 text-[8px] uppercase tracking-tighter hover:border-gold hover:text-gold transition-all">
+                                                    <ShieldCheck size={12} /> ID Back
                                                 </a>
                                                 <button
                                                     onClick={() => { setSelectedApplicant(reg); setShowMessageModal(true); }}

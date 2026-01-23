@@ -40,15 +40,17 @@ export async function POST(req: NextRequest) {
       return publicUrl;
     };
 
-    // Upload images to Supabase (Ensure buckets 'members' and 'ids' exist in Supabase)
+    // Upload images to Supabase (Ensure bucket 'members' exists in Supabase)
     const personalPhotoUrl = await uploadToSupabase(body.personalPhoto, 'personal.jpg', 'members');
-    const idCardPhotoUrl = await uploadToSupabase(body.idCardPhoto, 'idcard.jpg', 'ids');
+    const idCardFrontUrl = await uploadToSupabase(body.idCardFront, 'id_front.jpg', 'members');
+    const idCardBackUrl = await uploadToSupabase(body.idCardBack, 'id_back.jpg', 'members');
 
     // Create record in DB with URLs instead of base64
     const registration = await Registration.create({
       ...body,
       personalPhoto: personalPhotoUrl,
-      idCardPhoto: idCardPhotoUrl,
+      idCardFront: idCardFrontUrl,
+      idCardBack: idCardBackUrl,
     });
 
     // Send notifications
@@ -62,7 +64,8 @@ export async function POST(req: NextRequest) {
         <p><strong>Payment Method:</strong> ${body.paymentMethod}</p>
         <hr />
         <p><strong>Personal Photo:</strong> <a href="${personalPhotoUrl}">View Image</a></p>
-        <p><strong>ID Card:</strong> <a href="${idCardPhotoUrl}">View Image</a></p>
+        <p><strong>ID Card FRONT:</strong> <a href="${idCardFrontUrl}">View Image</a></p>
+        <p><strong>ID Card BACK:</strong> <a href="${idCardBackUrl}">View Image</a></p>
         <hr />
         <p>View full details in the <a href="${process.env.NEXTAUTH_URL}/admin">Admin Dashboard</a>.</p>
       </div>

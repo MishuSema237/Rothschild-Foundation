@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 import { sendEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
-    const session = await getServerSession(authOptions);
-    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    try {
-        const { to, subject, message, applicantName } = await req.json();
+  try {
+    const { to, subject, message, applicantName } = await req.json();
 
-        const themedHtml = `
+    const themedHtml = `
       <div style="font-family: serif; background-color: #0a0a0a; color: #d4af37; padding: 40px; border: 1px solid #d4af37;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #d4af37; letter-spacing: 5px; text-transform: uppercase;">Rothschild & Co</h1>
@@ -34,10 +34,10 @@ export async function POST(req: NextRequest) {
       </div>
     `;
 
-        await sendEmail(to, subject, themedHtml);
+    await sendEmail(to, subject, themedHtml);
 
-        return NextResponse.json({ success: true });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }

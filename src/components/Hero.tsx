@@ -1,9 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
             {/* Background with Hero Image */}
@@ -68,27 +72,29 @@ export default function Hero() {
             </div>
 
             {/* Floating Sparkles/Particles (Subtle) */}
-            <div className="absolute inset-0 pointer-events-none">
-                {[...Array(20)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-gold rounded-full opacity-20"
-                        initial={{
-                            x: Math.random() * 100 + "%",
-                            y: Math.random() * 100 + "%",
-                        }}
-                        animate={{
-                            y: [null, "-100%"],
-                            opacity: [0, 0.5, 0],
-                        }}
-                        transition={{
-                            duration: Math.random() * 10 + 10,
-                            repeat: Infinity,
-                            ease: "linear",
-                        }}
-                    />
-                ))}
-            </div>
+            {mounted && (
+                <div className="absolute inset-0 pointer-events-none">
+                    {[...Array(20)].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute w-1 h-1 bg-gold rounded-full opacity-20"
+                            initial={{
+                                x: Math.random() * 100 + "%",
+                                y: Math.random() * 100 + "%",
+                            }}
+                            animate={{
+                                y: [null, "-100%"],
+                                opacity: [0, 0.5, 0],
+                            }}
+                            transition={{
+                                duration: Math.random() * 10 + 10,
+                                repeat: Infinity,
+                                ease: "linear",
+                            }}
+                        />
+                    ))}
+                </div>
+            )}
         </section>
     );
 }

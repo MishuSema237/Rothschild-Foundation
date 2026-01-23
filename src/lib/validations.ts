@@ -12,7 +12,8 @@ export const registrationSchema = z.object({
     phone: z.string().min(5, "Valid phone number is required"),
     paymentMethod: z.string().min(1, "Payment method selection is required"),
     personalPhoto: z.string().min(1, "Personal photo is required"),
-    idCardPhoto: z.string().min(1, "ID card photo is required"),
+    idCardFront: z.string().min(1, "ID card front is required"),
+    idCardBack: z.string().min(1, "ID card back is required"),
 });
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;

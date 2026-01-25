@@ -6,6 +6,7 @@ import { Upload, ArrowRight, ArrowLeft, Loader2, Sparkles, AlertCircle } from "l
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema, RegistrationInput } from "@/lib/validations";
+import Image from "next/image";
 
 const STEPS = ["Personal Info", "Economic Status", "Verification", "Sacred Offerings"];
 

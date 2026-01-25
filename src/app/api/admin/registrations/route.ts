@@ -18,7 +18,8 @@ export async function GET() {
         await connectToDatabase();
         const registrations = await Registration.find().sort({ createdAt: -1 });
         return NextResponse.json(registrations);
-    } catch {
-        return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Database error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

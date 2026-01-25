@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, ShoppingBag, LayoutDashboard, Home, Search, Menu, X, Mail } from "lucide-react";
+import { Sparkles, ShoppingBag, Home, Search, Menu, X, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [

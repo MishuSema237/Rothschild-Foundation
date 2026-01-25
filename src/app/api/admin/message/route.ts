@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error("Message API Error:", error);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

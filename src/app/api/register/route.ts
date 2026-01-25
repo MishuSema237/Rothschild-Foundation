@@ -105,8 +105,11 @@ export async function POST(req: NextRequest) {
     ]);
 
     return NextResponse.json({ success: true, id: registration._id, uniqueCode });
-  } catch (error: any) {
-    if (error.__isStorageError && (error.status === 400 || error.statusCode === '404')) {
+  } catch (error: unknown) {
+    const isStorageError = error && typeof error === 'object' && '__isStorageError' in error;
+    const err = error as { status?: number; statusCode?: string };
+
+    if (isStorageError && (err.status === 400 || err.statusCode === '404')) {
       console.error('CRITICAL: Supabase bucket "illuminaty" not found. Please create it in your Supabase dashboard and set to Public.');
     } else {
       console.error('Registration API Error:', error);

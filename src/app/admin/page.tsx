@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import {
     Loader2, User, MapPin, DollarSign, Calendar, Mail,
     Phone, ExternalLink, ShieldCheck, Send, Plus, Trash2,
-    CreditCard, MessageSquare, ShoppingBag, Package, RefreshCw, Edit, Tag, CheckCircle
+    CreditCard, MessageSquare, ShoppingBag, RefreshCw, Edit
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -90,7 +90,6 @@ export default function AdminDashboard() {
 
     // Shop state
     const [showItemModal, setShowItemModal] = useState(false);
-    const [editingItem, setEditingItem] = useState<ItemRecord | null>(null);
     const [itemData, setItemData] = useState({ name: "", price: 0, description: "", mysticalProperties: "", image: "" });
 
     // Order state
@@ -384,7 +383,7 @@ export default function AdminDashboard() {
                                 <p className="text-[10px] text-gold/40 uppercase tracking-widest mt-1">Sacred artifacts for the chosen</p>
                             </div>
                             <button
-                                onClick={() => { setEditingItem(null); setItemData({ name: "", price: 0, description: "", mysticalProperties: "", image: "" }); setShowItemModal(true); }}
+                                onClick={() => { setItemData({ name: "", price: 0, description: "", mysticalProperties: "", image: "" }); setShowItemModal(true); }}
                                 className="flex items-center gap-2 px-6 py-2 bg-gold text-obsidian text-xs font-bold uppercase rounded-md hover:bg-gold-light transition-all"
                             >
                                 <Plus size={16} /> Add Artifact
@@ -473,7 +472,7 @@ export default function AdminDashboard() {
                                             </div>
                                         </div>
                                         <button
-                                            onClick={() => { setSelectedApplicant(order.registrationId as any); setShowMessageModal(true); setMessageData({ subject: `Update on your Order ${order.orderNumber}`, message: `Hello ${order.registrationId?.name},\n\nWe are updating you on your order of the ${order.itemId?.name}.\n\nStatus: ${order.status.toUpperCase()}\n\n[ENTER FURTHER DETAILS HERE]` }); }}
+                                            onClick={() => { setSelectedApplicant(order.registrationId as unknown as RegistrationRecord); setShowMessageModal(true); setMessageData({ subject: `Update on your Order ${order.orderNumber}`, message: `Hello ${order.registrationId?.name},\n\nWe are updating you on your order of the ${order.itemId?.name}.\n\nStatus: ${order.status.toUpperCase()}\n\n[ENTER FURTHER DETAILS HERE]` }); }}
                                             className="p-3 bg-gold/5 border border-gold/10 rounded-lg text-gold hover:bg-gold/10 transition-all"
                                             title="Message Client"
                                         >

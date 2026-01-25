@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json(order);
-    } catch (error: any) {
-        console.error('Track API Error:', error);
-        return NextResponse.json({ error: "Connection to the records was disrupted." }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

@@ -5,6 +5,9 @@ import connectToDatabase from '@/lib/mongodb';
 import Order from '@/models/Order';
 import Registration from '@/models/Registration';
 import Item from '@/models/Item';
+// These imports are required to register models for .populate()
+const _models = { Registration, Item };
+console.log("Registered models for population:", !!_models);
 import { cookies, headers } from 'next/headers';
 
 export async function GET() {
@@ -21,8 +24,9 @@ export async function GET() {
             .populate('itemId', 'name price')
             .sort({ createdAt: -1 });
         return NextResponse.json(orders);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }
 
@@ -38,7 +42,8 @@ export async function PUT(req: NextRequest) {
         const { id, status } = body;
         const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
         return NextResponse.json(order);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

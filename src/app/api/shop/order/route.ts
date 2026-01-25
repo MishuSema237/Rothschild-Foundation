@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         const orderNumber = `ORD-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
         // 4. Create Order
-        const order = await Order.create({
+        await Order.create({
             registrationId: registration._id,
             itemId: item._id,
             orderNumber,
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
         ]);
 
         return NextResponse.json({ success: true, orderNumber });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Order API Error:', error);
         return NextResponse.json({ error: "A sacred connection error occurred. Please try again." }, { status: 500 });
     }

@@ -15,8 +15,9 @@ export async function GET() {
         await connectToDatabase();
         const items = await Item.find({}).sort({ createdAt: -1 });
         return NextResponse.json(items);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }
 
@@ -31,8 +32,9 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const item = await Item.create(body);
         return NextResponse.json(item);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }
 
@@ -49,7 +51,8 @@ export async function DELETE(req: NextRequest) {
         await connectToDatabase();
         await Item.findByIdAndDelete(id);
         return NextResponse.json({ success: true });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

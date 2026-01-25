@@ -25,10 +25,10 @@ export default function SacredSteps() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="text-center mb-20"
+                    className="text-center mb-12 md:mb-20"
                 >
-                    <h2 className="text-4xl md:text-5xl font-serif gold-gradient-text mb-4">The Sacred Path</h2>
-                    <div className="h-0.5 w-24 bg-gold mx-auto" />
+                    <h2 className="text-3xl md:text-5xl font-serif gold-gradient-text mb-4">The Sacred Path</h2>
+                    <div className="h-0.5 w-16 md:w-24 bg-gold mx-auto" />
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -39,7 +39,7 @@ export default function SacredSteps() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.2 }}
-                            className="glass p-10 rounded-lg relative group h-full flex flex-col"
+                            className="glass p-6 md:p-10 rounded-lg relative group h-full flex flex-col"
                         >
                             <div className="absolute -top-6 left-10 w-12 h-12 bg-gold flex items-center justify-center text-obsidian font-bold text-xl rounded-full sacred-glow group-hover:scale-110 transition-transform">
                                 {index + 1}
@@ -56,9 +56,9 @@ export default function SacredSteps() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className="mt-24 text-center glass p-12 max-w-4xl mx-auto rounded-xl border- gold/30"
+                    className="mt-16 md:mt-24 text-center glass p-8 md:p-12 max-w-4xl mx-auto rounded-xl border-gold/30"
                 >
-                    <p className="text-xl md:text-2xl font-serif italic text-gold/90 leading-relaxed">
+                    <p className="text-lg md:text-2xl font-serif italic text-gold/90 leading-relaxed">
                         &quot;Each of these steps is essential and must be completed in proper sequence for one to fully partake in the privileges and honors reserved for members.&quot;
                     </p>
                     <p className="mt-8 text-gold font-bold tracking-[0.3em] uppercase">Follow the light!!!</p>

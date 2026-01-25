@@ -1,5 +1,17 @@
 import NextAuth from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { cookies, headers } from "next/headers";
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export async function GET(req: Request, context: any) {
+  await cookies();
+  await headers();
+  const params = await context.params;
+  return (NextAuth as any)(req, { params }, authOptions);
+}
+
+export async function POST(req: Request, context: any) {
+  await cookies();
+  await headers();
+  const params = await context.params;
+  return (NextAuth as any)(req, { params }, authOptions);
+}

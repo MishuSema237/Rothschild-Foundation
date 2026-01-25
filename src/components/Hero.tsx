@@ -27,9 +27,9 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: "easeOut" }}
-                    className="mb-8 flex justify-center"
+                    className="mb-6 flex justify-center"
                 >
-                    <div className="relative w-40 h-40 sacred-glow rounded-full overflow-hidden border border-gold/20">
+                    <div className="relative w-24 h-24 md:w-40 md:h-40 sacred-glow rounded-full overflow-hidden border border-gold/20">
                         <Image
                             src="/illuminati_eyes_emblem.png"
                             alt="Rothschild & Co Logo"
@@ -43,7 +43,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.3 }}
-                    className="text-5xl md:text-7xl lg:text-8xl font-serif gold-gradient-text mb-6 tracking-tighter"
+                    className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif gold-gradient-text mb-6 tracking-tighter"
                 >
                     Rothschild & Co
                 </motion.h1>
@@ -52,7 +52,7 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
-                    className="text-xl md:text-2xl text-gold/80 max-w-2xl mx-auto mb-10 font-light tracking-widest uppercase"
+                    className="text-base sm:text-xl md:text-2xl text-gold/80 max-w-2xl mx-auto mb-10 font-light tracking-[0.2em] md:tracking-widest uppercase"
                 >
                     Follow the Light
                 </motion.p>

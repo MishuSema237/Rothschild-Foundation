@@ -25,8 +25,8 @@ export default function Benefits() {
                         viewport={{ once: true }}
                         className="lg:w-1/2"
                     >
-                        <h2 className="text-4xl md:text-5xl font-serif gold-gradient-text mb-8">Rewards of the Chosen</h2>
-                        <p className="text-foreground/60 text-lg mb-10 font-light max-w-xl">
+                        <h2 className="text-3xl md:text-5xl font-serif gold-gradient-text mb-6 md:mb-8">Rewards of the Chosen</h2>
+                        <p className="text-foreground/60 text-base md:text-lg mb-8 md:mb-10 font-light max-w-xl">
                             Our objective is to raise challenges and give them fortune, accept the weak and make them stronger, and turn the poor into rich and famous.
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

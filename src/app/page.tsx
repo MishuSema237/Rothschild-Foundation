@@ -25,7 +25,12 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="py-12 border-t border-gold/10 text-center">
+      <footer className="py-16 border-t border-gold/10 text-center bg-obsidian">
+        <div className="container mx-auto px-6 mb-12 flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
+          <a href="/shop" className="text-gold/60 hover:text-gold transition-all uppercase tracking-[0.3em] text-[10px] font-bold">Mystical Shop</a>
+          <a href="/track" className="text-gold/60 hover:text-gold transition-all uppercase tracking-[0.3em] text-[10px] font-bold">Order Tracking</a>
+          <a href="#induction" className="text-gold/60 hover:text-gold transition-all uppercase tracking-[0.3em] text-[10px] font-bold">Registration</a>
+        </div>
         <p className="text-gold/30 text-xs uppercase tracking-[0.5em] mb-4">Truth • Excellence • Value</p>
         <p className="text-gold/20 text-[10px] tracking-widest uppercase">© {new Date().getFullYear()} Rothschild & Co. All Rights Reserved.</p>
       </footer>

@@ -3,8 +3,11 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
 import Registration from "@/models/Registration";
+import { cookies, headers } from "next/headers";
 
 export async function GET() {
+    await cookies();
+    await headers();
     const session = await getServerSession(authOptions);
 
     if (!session) {

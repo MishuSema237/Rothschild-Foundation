@@ -33,11 +33,11 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-obsidian flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen bg-obsidian flex flex-col items-center justify-center pt-32 pb-8 px-6">
             <div className="w-full max-w-md">
                 <div className="text-center mb-10">
                     <div className="relative w-24 h-24 mx-auto mb-6 sacred-glow rounded-full border border-gold/20 overflow-hidden">
-                        <Image src="/logo.png" alt="Logo" fill className="object-cover" />
+                        <Image src="/illuminati_eyes_emblem.png" alt="Logo" fill className="object-cover" />
                     </div>
                     <h1 className="text-3xl font-serif gold-gradient-text tracking-widest uppercase">Admin Entry</h1>
                 </div>

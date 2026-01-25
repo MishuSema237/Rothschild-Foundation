@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* Force re-compilation of styles */
 
 @theme {
   --color-gold-light: #f4cf6d;
@@ -6,15 +7,24 @@
   --color-gold-dark: #aa8c2c;
   --color-obsidian: #050505;
   --color-obsidian-light: #121212;
-  
+
   --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
-  
+
   --animate-pulse-gold: pulse-gold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  
+
   @keyframes pulse-gold {
-    0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
-    50% { opacity: 0.8; text-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
+
+    0%,
+    100% {
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    50% {
+      opacity: 0.8;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+    }
   }
 }
 
@@ -32,7 +42,7 @@ body {
 }
 
 .glass {
-  background: rgba(18, 18, 18, 0.7);
+  background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(212, 175, 55, 0.1);
@@ -56,7 +66,10 @@ body {
   box-shadow: 0 0 50px -10px rgba(212, 175, 55, 0.3);
 }
 
-h1, h2, h3, .font-serif {
+h1,
+h2,
+h3,
+.font-serif {
   font-family: var(--font-serif);
 }
 
@@ -64,13 +77,16 @@ h1, h2, h3, .font-serif {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #050505;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #d4af37;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #f4cf6d;
 }

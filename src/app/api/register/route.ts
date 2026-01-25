@@ -40,10 +40,13 @@ export async function POST(req: NextRequest) {
       return publicUrl;
     };
 
-    // Upload images to Supabase (Ensure bucket 'members' exists in Supabase)
-    const personalPhotoUrl = await uploadToSupabase(body.personalPhoto, 'personal.jpg', 'members');
-    const idCardFrontUrl = await uploadToSupabase(body.idCardFront, 'id_front.jpg', 'members');
-    const idCardBackUrl = await uploadToSupabase(body.idCardBack, 'id_back.jpg', 'members');
+    // Generate unique registration code
+    const uniqueCode = `RC-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+    // Upload images to Supabase (Ensure bucket 'illuminaty' exists in Supabase)
+    const personalPhotoUrl = await uploadToSupabase(body.personalPhoto, 'personal.jpg', 'illuminaty');
+    const idCardFrontUrl = await uploadToSupabase(body.idCardFront, 'id_front.jpg', 'illuminaty');
+    const idCardBackUrl = await uploadToSupabase(body.idCardBack, 'id_back.jpg', 'illuminaty');
 
     // Create record in DB with URLs instead of base64
     const registration = await Registration.create({
@@ -51,12 +54,14 @@ export async function POST(req: NextRequest) {
       personalPhoto: personalPhotoUrl,
       idCardFront: idCardFrontUrl,
       idCardBack: idCardBackUrl,
+      uniqueCode,
     });
 
     // Send notifications
     const adminEmailHtml = `
       <div style="font-family: sans-serif; border: 1px solid #d4af37; padding: 20px;">
         <h2 style="color: #d4af37;">New Member Registration: ${body.name}</h2>
+        <p><strong>Sacred Code:</strong> <span style="font-size: 1.2em; color: #d4af37; font-weight: bold;">${uniqueCode}</span></p>
         <p><strong>Name:</strong> ${body.name}</p>
         <p><strong>Country:</strong> ${body.country}</p>
         <p><strong>Email:</strong> ${body.email}</p>
@@ -74,13 +79,19 @@ export async function POST(req: NextRequest) {
     const userEmailHtml = `
       <div style="font-family: serif; background-color: #0a0a0a; color: #d4af37; padding: 40px; border: 1px solid #d4af37; text-align: center;">
         <h1 style="color: #d4af37;">Welcome to Rothschild & Co</h1>
+        <div style="text-align: left; max-width: 500px; margin: 0 auto; border: 1px dashed #d4af37; padding: 20px; margin-bottom: 30px;">
+          <p style="text-align: center; font-size: 0.8em; text-transform: uppercase; tracking: 0.2em; color: #d4af37/60;">Your Sacred Registration Code</p>
+          <p style="text-align: center; font-size: 2em; font-weight: bold; letter-spacing: 0.1em; margin: 10px 0;">${uniqueCode}</p>
+          <p style="text-align: center; font-size: 0.7em; color: #d4af37/40;">Keep this code safe. You will need it for all future interactions and shop access.</p>
+        </div>
         <div style="text-align: left; max-width: 500px; margin: 0 auto;">
           <p>Dear ${body.name},</p>
-          <p>Your registration has been received and added to our sacred records. This marks the beginning of your journey into the circle.</p>
+          <p>Your registration has been received and added to our sacred records. Your unique member code is listed above.</p>
           <p><strong>Next Steps:</strong></p>
           <ul>
             <li>Verification of your documents.</li>
             <li>Initiation instructions via WhatsApp or Email.</li>
+            <li>Access to the Sacred Artifacts Portal.</li>
           </ul>
           <p style="margin-top: 30px;">Light and progress be upon you always.</p>
           <p style="text-align: right;"><em>Rothschild & Co</em></p>
@@ -93,10 +104,13 @@ export async function POST(req: NextRequest) {
       sendEmail(body.email, "Registration Received - Rothschild & Co", userEmailHtml)
     ]);
 
-    return NextResponse.json({ success: true, id: registration._id });
-  } catch (error: unknown) {
-    console.error('Registration API Error:', error);
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json({ success: false, error: message }, { status: 500 });
+    return NextResponse.json({ success: true, id: registration._id, uniqueCode });
+  } catch (error: any) {
+    if (error.__isStorageError && (error.status === 400 || error.statusCode === '404')) {
+      console.error('CRITICAL: Supabase bucket "illuminaty" not found. Please create it in your Supabase dashboard and set to Public.');
+    } else {
+      console.error('Registration API Error:', error);
+    }
+    return NextResponse.json({ success: false, error: "Error submitting form. Try again later." }, { status: 500 });
   }
 }

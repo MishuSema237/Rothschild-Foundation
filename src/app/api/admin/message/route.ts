@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
+import { cookies, headers } from "next/headers";
 
 export async function POST(req: NextRequest) {
+  await cookies();
+  await headers();
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 

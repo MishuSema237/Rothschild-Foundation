@@ -3,8 +3,11 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
 import PaymentMethod from "@/models/PaymentMethod";
+import { cookies, headers } from "next/headers";
 
 export async function GET() {
+    await cookies();
+    await headers();
     try {
         await connectToDatabase();
         const methods = await PaymentMethod.find({ isActive: true });
@@ -16,6 +19,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+    await cookies();
+    await headers();
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -31,6 +36,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+    await cookies();
+    await headers();
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -46,6 +53,8 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+    await cookies();
+    await headers();
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 

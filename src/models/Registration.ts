@@ -14,6 +14,7 @@ const RegistrationSchema = new Schema({
     email: { type: String, required: true },
     phone: { type: String, required: true },
     paymentMethod: { type: String, required: true },
+    uniqueCode: { type: String, unique: true },
     status: { type: String, default: 'pending', enum: ['pending', 'approved', 'rejected'] },
     createdAt: { type: Date, default: Date.now },
 });

@@ -208,7 +208,7 @@ export default function InductionForm() {
                                     <label className="text-gold/60 text-xs uppercase tracking-widest block">Personal Picture</label>
                                     <div className={`relative h-40 md:h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.personalPhoto ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                         {previews.personal ? (
-                                            <img src={previews.personal} alt="Personal Preview" className="w-full h-full object-cover" />
+                                            <Image src={previews.personal} alt="Personal Preview" fill className="object-cover" unoptimized />
                                         ) : (
                                             <div className="absolute inset-0 flex flex-col items-center justify-center text-gold/40">
                                                 <Upload className="w-6 h-6 md:w-8 md:h-8 mb-2" />
@@ -225,7 +225,7 @@ export default function InductionForm() {
                                         <label className="text-gold/60 text-xs uppercase tracking-widest block">National ID (FRONT)</label>
                                         <div className={`relative h-40 md:h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.idCardFront ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                             {previews.idCardFront ? (
-                                                <img src={previews.idCardFront} alt="ID Front Preview" className="w-full h-full object-cover" />
+                                                <Image src={previews.idCardFront} alt="ID Front Preview" fill className="object-cover" unoptimized />
                                             ) : (
                                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gold/40">
                                                     <Upload className="w-6 h-6 md:w-8 md:h-8 mb-2" />
@@ -240,7 +240,7 @@ export default function InductionForm() {
                                         <label className="text-gold/60 text-xs uppercase tracking-widest block">National ID (BACK)</label>
                                         <div className={`relative h-40 md:h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.idCardBack ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                             {previews.idCardBack ? (
-                                                <img src={previews.idCardBack} alt="ID Back Preview" className="w-full h-full object-cover" />
+                                                <Image src={previews.idCardBack} alt="ID Back Preview" fill className="object-cover" unoptimized />
                                             ) : (
                                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gold/40">
                                                     <Upload className="w-6 h-6 md:w-8 md:h-8 mb-2" />

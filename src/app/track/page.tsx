@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Package, Search, Loader2, AlertCircle, MapPin, CheckCircle2, Clock, Truck, Box } from "lucide-react";
+import { Package, Search, Loader2, AlertCircle, CheckCircle2, Clock, Truck, Box } from "lucide-react";
 import Image from "next/image";
 
 interface TrackedOrder {

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rothschild & Co | Follow the Light",
     description: "Official recruitment and induction portal for Rothschild & Co.",
-    url: "https://yourdomain.com",
+    url: "https://rothschild-foundation.vercel.app/",
     siteName: "Rothschild & Co",
     images: [
       {
